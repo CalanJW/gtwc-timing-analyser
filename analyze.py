@@ -219,7 +219,7 @@ fig_w = COL_W * 3 + MARGIN * 2
 fig_h = TITLE_H + HEADER_H + N * ROW_H + FOOTER_H + 0.3
 
 fig = plt.figure(figsize=(fig_w, fig_h), dpi=150)
-fig.patch.set_facecolor('#111111')
+fig.patch.set_facecolor('#0f0f1a')
 
 # ── coordinate helpers ─────────────────────────────────────────────────────────
 # We work in figure-fraction axes (0..1)
@@ -242,17 +242,17 @@ fig.text(0.5, title_y, 'GTWC EUROPE — BEST SECTOR TIMES',
 subtitle_y = 1.0 - y_frac(TITLE_H * 0.80)
 fig.text(0.5, subtitle_y, 'Driver best sector — all drivers, all stints',
          ha='center', va='center',
-         fontsize=9, color='#888888', fontfamily='monospace')
+         fontsize=9, color='#888899', fontfamily='monospace')
 
 # ── sector columns ─────────────────────────────────────────────────────────────
 
 SECTOR_LABELS = ['SECTOR 1', 'SECTOR 2', 'SECTOR 3']
 SECTOR_RANKED = [s1_ranked, s2_ranked, s3_ranked]
 
-HDR_BG  = '#2a2a2a'   # uniform header background
-ROW_ODD = '#1e1e1e'   # alternating row backgrounds
-ROW_EVN = '#181818'
-TXT     = '#dddddd'
+HDR_BG  = '#1e1e2e'   # uniform header background
+ROW_ODD = '#1a1a2e'   # alternating row backgrounds
+ROW_EVN = '#16213e'
+TXT     = '#ddddee'
 
 for col_idx, (label, ranked) in enumerate(zip(SECTOR_LABELS, SECTOR_RANKED)):
     # Column x positions
@@ -290,7 +290,7 @@ for col_idx, (label, ranked) in enumerate(zip(SECTOR_LABELS, SECTOR_RANKED)):
         fig.text(x_frac(sx), col_sub_y, stxt,
                  ha='left' if stxt not in ('TIME',) else 'right',
                  va='center',
-                 fontsize=8, fontweight='bold', color='#888888',
+                 fontsize=8, fontweight='bold', color='#888899',
                  fontfamily='monospace')
 
     # Data rows
@@ -351,7 +351,7 @@ for col_idx in range(1, 3):
     sep_x = x_frac(MARGIN + col_idx * COL_W - MARGIN * 0.25)
     line = plt.Line2D([sep_x, sep_x],
                       [y_frac(FOOTER_H), 1.0 - y_frac(TITLE_H * 0.1)],
-                      color='#444444', linewidth=0.5,
+                      color='#333355', linewidth=0.5,
                       transform=fig.transFigure)
     fig.add_artist(line)
 
@@ -359,7 +359,7 @@ for col_idx in range(1, 3):
 fig.text(0.5, y_frac(FOOTER_H * 0.5),
          'Excludes formation/safety-car laps (>40% above global minimum per sector)  •  Sector times from official GTWC timing data',
          ha='center', va='center',
-         fontsize=7, color='#555555', fontfamily='monospace')
+         fontsize=7, color='#555566', fontfamily='monospace')
 
 plt.savefig('sector_scoreboard.png', dpi=150, bbox_inches='tight',
             facecolor=fig.get_facecolor())
