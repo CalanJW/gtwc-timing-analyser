@@ -248,9 +248,13 @@ fig.text(0.5, subtitle_y, 'Driver best sector — all drivers, all stints',
 
 SECTOR_LABELS = ['SECTOR 1', 'SECTOR 2', 'SECTOR 3']
 SECTOR_RANKED = [s1_ranked, s2_ranked, s3_ranked]
-SECTOR_ACCENT = ['#9b59b6', '#27ae60', '#e67e22']   # purple / green / orange
 
-for col_idx, (label, ranked, accent) in enumerate(zip(SECTOR_LABELS, SECTOR_RANKED, SECTOR_ACCENT)):
+HDR_BG  = '#1e1e2e'   # uniform header background
+ROW_ODD = '#1a1a2e'   # alternating row backgrounds
+ROW_EVN = '#16213e'
+TXT     = '#ddddee'
+
+for col_idx, (label, ranked) in enumerate(zip(SECTOR_LABELS, SECTOR_RANKED)):
     # Column x positions
     col_x_left  = MARGIN + col_idx * COL_W
     col_x_right = col_x_left + COL_W - MARGIN * 0.5
@@ -263,8 +267,8 @@ for col_idx, (label, ranked, accent) in enumerate(zip(SECTOR_LABELS, SECTOR_RANK
         (x_frac(col_x_left), y_frac(hdr_bottom)),
         x_frac(col_x_right - col_x_left),
         y_frac(HEADER_H),
-        boxstyle='round,pad=0.01',
-        facecolor=accent, edgecolor='none',
+        boxstyle='square,pad=0',
+        facecolor=HDR_BG, edgecolor='none',
         transform=fig.transFigure, clip_on=False
     )
     fig.add_artist(hdr_rect)
@@ -272,7 +276,7 @@ for col_idx, (label, ranked, accent) in enumerate(zip(SECTOR_LABELS, SECTOR_RANK
     fig.text(x_frac(col_cx), y_frac(hdr_bottom + HEADER_H * 0.62), label,
              ha='center', va='center',
              fontsize=14, fontweight='bold',
-             color='white', fontfamily='monospace')
+             color='#ffffff', fontfamily='monospace')
 
     # Sub-header labels
     col_sub_y = y_frac(hdr_bottom + HEADER_H * 0.22)
@@ -286,7 +290,7 @@ for col_idx, (label, ranked, accent) in enumerate(zip(SECTOR_LABELS, SECTOR_RANK
         fig.text(x_frac(sx), col_sub_y, stxt,
                  ha='left' if stxt not in ('TIME',) else 'right',
                  va='center',
-                 fontsize=8, fontweight='bold', color='#cccccc',
+                 fontsize=8, fontweight='bold', color='#888899',
                  fontfamily='monospace')
 
     # Data rows
@@ -296,22 +300,8 @@ for col_idx, (label, ranked, accent) in enumerate(zip(SECTOR_LABELS, SECTOR_RANK
         row_y_bottom = row_y_top - ROW_H
         row_cy       = (row_y_top + row_y_bottom) / 2
 
-        # Row background
-        if rank_idx == 0:
-            bg = accent         # 1st = accent colour
-            txt_col = '#ffffff'
-        elif rank_idx == 1:
-            bg = '#b0b0b8'      # silver
-            txt_col = '#111111'
-        elif rank_idx == 2:
-            bg = '#c87941'      # bronze
-            txt_col = '#ffffff'
-        elif rank_idx % 2 == 0:
-            bg = '#1a1a2e'
-            txt_col = '#ddddee'
-        else:
-            bg = '#16213e'
-            txt_col = '#ddddee'
+        bg      = ROW_ODD if rank_idx % 2 == 0 else ROW_EVN
+        txt_col = TXT
 
         rect = FancyBboxPatch(
             (x_frac(col_x_left), y_frac(row_y_bottom)),
